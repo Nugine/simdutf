@@ -12,3 +12,10 @@ __pycache__
 singleheader/simdutf.cpp
 singleheader/simdutf.h
 singleheader/singleheader.zip
+singleheader/amalgamated_demo
+
+# IDE
+/.vscode
+
+# Testing
+/Testing

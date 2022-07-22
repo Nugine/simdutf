@@ -19,7 +19,7 @@ int main() {
   for(const auto& e: simdutf::available_implementations) {
       if(!e->supported_by_runtime_system()) { continue; }
       const bool current = e->validate_utf8(bad64, length);
-      std::cout << e->name() << " returns " << current << std::endl;
+      std::cout << e->c_name() << " returns " << current << std::endl;
       if(current) { is_ok = false; }
   }
   if(!is_ok) { abort(); }

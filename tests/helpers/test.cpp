@@ -104,7 +104,7 @@ Examples:
         abort();
       }
 
-      fprintf(file, "- %s\n", implementation->name().c_str());
+      fprintf(file, "- %s\n", implementation->c_name());
     }
   }
 
@@ -146,12 +146,12 @@ Examples:
       }
 
       if (not cmdline.architectures.empty()) {
-          if (cmdline.architectures.count(implementation->name()) == 0) {
+          if (cmdline.architectures.count(implementation->c_name()) == 0) {
             continue;
           }
       }
 
-      printf("Checking implementation %s\n", implementation->name().c_str());
+      printf("Checking implementation %s\n", implementation->c_name());
 
       auto filter = [&cmdline](const simdutf::test::test_entry& test) -> bool {
         if (cmdline.tests.empty())

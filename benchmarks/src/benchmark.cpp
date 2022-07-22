@@ -100,7 +100,7 @@ Benchmark::Benchmark(std::vector<input::Testcase>&& testcases)
 
     for (const auto& implementation: simdutf::available_implementations) {
         for (const auto& function: implemented_functions) {
-            std::string name = function.first + "+" + implementation->name();
+            std::string name = function.first + "+" + implementation->c_name();
             known_procedures.insert(name);
             expected_input_encoding.insert(make_pair(name,function.second));
         }
@@ -358,7 +358,7 @@ void Benchmark::run(const std::string& procedure_name, size_t iterations) {
         }
         return;
     }
-    auto implementation = simdutf::available_implementations[impl];
+    auto implementation = simdutf::available_implementations[impl.c_str()];
     if (implementation == nullptr) {
         throw std::runtime_error("Wrong implementation " + impl);
     }

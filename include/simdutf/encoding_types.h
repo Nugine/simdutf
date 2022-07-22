@@ -11,7 +11,7 @@ enum encoding_type {
         unspecified
 };
 
-std::string to_string(encoding_type bom);
+const char* to_c_string(encoding_type bom);
 
 // Note that BOM for UTF8 is discouraged.
 namespace BOM {

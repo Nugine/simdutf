@@ -1,24 +1,6 @@
 #include "simdutf.h"
 #include <initializer_list>
-#include <string>
 #include <climits>
-
-// Useful for debugging purposes
-namespace simdutf {
-namespace {
-
-template <typename T>
-std::string toBinaryString(T b) {
-   std::string binary = "";
-   T mask = T(1) << (sizeof(T) * CHAR_BIT - 1);
-   while (mask > 0) {
-    binary += ((b & mask) == 0) ? '0' : '1';
-    mask >>= 1;
-  }
-  return binary;
-}
-}
-}
 
 // Implementations
 #include "simdutf/arm64.h"
@@ -85,8 +67,8 @@ const fallback::implementation fallback_singleton{};
  */
 class detect_best_supported_implementation_on_first_use final : public implementation {
 public:
-  const std::string &name() const noexcept final { return set_best()->name(); }
-  const std::string &description() const noexcept final { return set_best()->description(); }
+  const char* c_name() const noexcept final { return set_best()->c_name(); }
+  const char* c_description() const noexcept final { return set_best()->c_description(); }
   uint32_t required_instruction_sets() const noexcept final { return set_best()->required_instruction_sets(); }
 
   simdutf_warn_unused bool validate_utf8(const char * buf, size_t len) const noexcept final override {

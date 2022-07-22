@@ -357,7 +357,7 @@ public:
    *
    * @return the name of the implementation, e.g. "haswell", "westmere", "arm64"
    */
-  virtual const std::string &name() const { return _name; }
+  virtual const char* c_name() const { return _name; }
 
   /**
    * The description of this implementation.
@@ -367,7 +367,7 @@ public:
    *
    * @return the name of the implementation, e.g. "haswell", "westmere", "arm64"
    */
-  virtual const std::string &description() const { return _description; }
+  virtual const char* c_description() const { return _description; }
 
   /**
    * The instruction sets this implementation is compiled against
@@ -717,8 +717,8 @@ public:
 protected:
   /** @private Construct an implementation with the given name and description. For subclasses. */
   simdutf_really_inline implementation(
-    std::string name,
-    std::string description,
+    const char* name,
+    const char* description,
     uint32_t required_instruction_sets
   ) :
     _name(name),
@@ -728,16 +728,19 @@ protected:
   }
   virtual ~implementation()=default;
 
+  implementation(const implementation&) = delete;
+  const implementation& operator=(const implementation&) = delete;
+
 private:
   /**
    * The name of this implementation.
    */
-  const std::string _name;
+  const char* _name;
 
   /**
    * The description of this implementation.
    */
-  const std::string _description;
+  const char* _description;
 
   /**
    * Instruction sets required for this implementation.
@@ -775,9 +778,9 @@ public:
    * @param name the implementation to find, e.g. "westmere", "haswell", "arm64"
    * @return the implementation, or nullptr if the parse failed.
    */
-  const implementation * operator[](const std::string &name) const noexcept {
+  const implementation * operator[](const char *name) const noexcept {
     for (const implementation * impl : *this) {
-      if (impl->name() == name) { return impl; }
+      if (strcmp(impl->c_name(), name) == 0) { return impl; }
     }
     return nullptr;
   }
